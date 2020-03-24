@@ -9,3 +9,5 @@
     - name: Show the time
       command: >
         date
+
+## Use facts https://docs.ansible.com/ansible/latest/modules/setup_module.html
