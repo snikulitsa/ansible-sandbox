@@ -1,0 +1,12 @@
+- name: Hello World
+  hosts: centoscluster
+
+  vars:
+    os:
+      family: "{{ ansible_facts['os_family'] }}"
+      distribution: "{{ ansible_facts['distribution'] }}"
+
+  tasks:
+    - name: Hello from OS
+      debug:
+        msg: "Hello world! From family: {{ os.family }}, distribution: {{ os.distribution }}"
