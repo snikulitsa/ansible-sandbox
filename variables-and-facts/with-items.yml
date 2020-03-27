@@ -1,0 +1,10 @@
+- name: With items test
+  hosts: centosdocker
+
+  tasks:
+    - name: println()
+      debug:
+        msg: "Text: {{ item.text }}, number: {{ item.number }}"
+      with_items:
+        - { text: "One", number: 1}
+        - { text: "Two", number: 2}
