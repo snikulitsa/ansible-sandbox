@@ -1,0 +1,54 @@
+- name: Install Kafka Ecosystem
+  hosts: centosdocker
+
+  tasks:
+    - name: Zookeeper
+      docker_container:
+        name: zookeeper
+        image: confluent/zookeeper
+        state: started
+        ports:
+          - "2181:2181"
+          - "2888:2888"
+          - "3888:3888"
+    - name: Kafka
+      docker_container:
+        name: kafka
+        image: confluent/kafka
+        state: started
+        ports:
+          - "9092:9092"
+        links:
+          - "zookeeper:zookeeper"
+    - name: Schema_Registry
+      docker_container:
+        name: schema-registry
+        image: confluent/schema-registry
+        state: started
+        ports:
+          - "8081:8081"
+        links:
+          - "zookeeper:zookeeper"
+          - "kafka:kafka"
+    - name: Rest_Proxy
+      docker_container:
+        name: rest-proxy
+        image: confluent/rest-proxy
+        state: started
+        ports:
+          - "8082:8082"
+        links:
+          - "zookeeper:zookeeper"
+          - "kafka:kafka"
+          - "schema-registry:schema-registry"
+    - name: Kafka_Manager
+      docker_container:
+        name: kafka-manager
+        image: sheepkiller/kafka-manager
+        state: started
+        ports:
+          - "9000:9000"
+        links:
+          - "zookeeper:zookeeper"
+        env:
+          ZK_HOSTS: "zookeeper:2181"
