@@ -52,3 +52,13 @@
           - "zookeeper:zookeeper"
         env:
           ZK_HOSTS: "zookeeper:2181"
+    - name: Kafka_Lag_Exporter
+      docker_container:
+        name: kafka-lag-exporter
+        image: "braedon/prometheus-kafka-consumer-group-exporter:0.5.5"
+        state: started
+        ports:
+          - "9208:9208"
+        links:
+          - "kafka:kafka"
+        command: "-b kafka:9092"
