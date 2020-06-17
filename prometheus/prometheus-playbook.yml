@@ -1,0 +1,18 @@
+- name: Install Prometheus
+  hosts: centosdocker
+
+  tasks:
+    - name: Install Prometheus
+      docker_container:
+        name: prometheus
+        image: prom/prometheus
+        state: started
+        ports:
+          - "9090:9090"
+        mounts:
+          -
+            type: volume
+            source: "prometheus"
+            target: "/etc/prometheus/"
+        links:
+          - "kafka-lag-exporter:kafka-lag-exporter"
