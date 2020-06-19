@@ -1,6 +1,13 @@
 - name: Install Prometheus
   hosts: centosdocker
 
+  handlers:
+    - name: restart_prometheus_container
+      docker_container:
+        name: prometheus
+        state: started
+        restart: yes
+
   tasks:
     - name: Install Prometheus
       docker_container:
@@ -16,3 +23,8 @@
             target: "/etc/prometheus/"
         links:
           - "kafka-lag-exporter:kafka-lag-exporter"
+    - name: Configure Prometheus
+      copy:
+        src: "prometheus.yml"
+        dest: "/var/lib/docker/volumes/prometheus/_data/prometheus.yml"
+      notify: restart_prometheus_container
