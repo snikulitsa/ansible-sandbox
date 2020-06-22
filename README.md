@@ -13,4 +13,4 @@
 
 - pip playbook
 - pip docker playbook
-- fix: dependent containers starting
+- fix: troubles with dependent containers starting (workaround: run playbooks repeatedly 😅)
