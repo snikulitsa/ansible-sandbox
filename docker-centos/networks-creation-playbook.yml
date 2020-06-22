@@ -1,0 +1,7 @@
+- name: Neworks creation
+  hosts: centosdocker
+
+  tasks:
+    - name: Bridged SANDBOX network creation
+      docker_network:
+        name: sandbox

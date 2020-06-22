@@ -1,4 +1,5 @@
 - name: Install Prometheus
+  gather_facts: No
   hosts: centosdocker
 
   handlers:
@@ -21,8 +22,9 @@
             type: volume
             source: "prometheus"
             target: "/etc/prometheus/"
-        links:
-          - "kafka-lag-exporter:kafka-lag-exporter"
+        networks_cli_compatible: yes
+        networks:
+          - name: sandbox
     - name: Configure Prometheus
       copy:
         src: "prometheus.yml"
