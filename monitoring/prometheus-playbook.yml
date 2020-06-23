@@ -1,4 +1,4 @@
-- name: Install Prometheus
+- name: Deploy Prometheus
   gather_facts: No
   hosts: centosdocker
 
@@ -10,7 +10,7 @@
         restart: yes
 
   tasks:
-    - name: Install Prometheus
+    - name: Deploy Prometheus
       docker_container:
         name: prometheus
         image: prom/prometheus
