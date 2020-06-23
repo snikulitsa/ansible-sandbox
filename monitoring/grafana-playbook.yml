@@ -1,0 +1,28 @@
+- name: Deploy Grafana
+  gather_facts: No
+  hosts: centosdocker
+
+  vars_files:
+    - grafana_vars.yml
+
+  tasks:
+    - name: Deploy Grafana
+      docker_container:
+        name: grafana
+        image: grafana/grafana
+        state: started
+        ports:
+          - "3000:3000"
+        networks_cli_compatible: yes
+        networks:
+          - name: sandbox
+
+    - name: Configure Prometheus Datasource
+      grafana_datasource:
+        name: "Prometheus"
+        grafana_url: "http://{{ grafana_host }}:3000"
+        grafana_user: "admin"
+        grafana_password: "admin"
+        ds_type: "prometheus"
+        ds_url: "http://prometheus:9090"
+

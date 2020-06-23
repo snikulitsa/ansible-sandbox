@@ -1,4 +1,4 @@
-- name: Install Kafka Ecosystem
+- name: Deploy Kafka Ecosystem
   gather_facts: No
   hosts: centosdocker
 
